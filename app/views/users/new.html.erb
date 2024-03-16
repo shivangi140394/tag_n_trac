@@ -1,0 +1,50 @@
+<h1>Users#new</h1>
+<%= form_with model: @user do |f| %>
+  <% if @user.errors.any? %>
+    <div>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :role %><br />
+    <%= f.select :role, User.roles.keys.map { |role| [role.humanize, role] } %>
+  </div>
+  <div>
+    <%= f.label :username %><br>
+    <%= f.text_field :username %>
+  </div>
+  <div>
+    <%= f.label :password %><br>
+    <%= f.password_field :password %>
+  </div>
+  <div>
+    <%= f.label :password_confirmation %><br>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div>
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </div>
+  <div>
+    <%= f.label :phone_number %><br>
+    <%= f.text_field :phone_number %>
+  </div>
+  <div>
+    <%= f.label :address %><br>
+    <%= f.text_field :address %>
+  </div>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+<% unless current_user%>
+<%= link_to 'Login', new_user_session_path %><br>
+<% end %>

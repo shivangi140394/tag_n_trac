@@ -1,0 +1,14 @@
+<% if current_user && current_user.role == "admin" %>
+  <%= link_to 'User', users_path %><br>
+  <h1>Welcome Pages, <%= current_user.name %></h1>
+  <%= link_to 'Log out', user_session_path(current_user), data: { turbo_method: :delete } %><br>
+<% elsif  current_user && current_user.role != "admin" %>
+  <h1>Welcome Pages, <%= current_user.name %></h1>
+  <%= link_to 'Log out', user_session_path(current_user), data: { turbo_method: :delete } %><br>
+<% else %>
+  <h1>This is the index page</h1>
+  <%= link_to 'Login', new_user_session_path %><br>
+<% end %>
+<%#= link_to 'New User', new_user_path %><br>
+
+<%= link_to 'Secret page', '/users/secret' %>
