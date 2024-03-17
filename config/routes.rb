@@ -15,4 +15,5 @@ Rails.application.routes.draw do
       patch 'update_status', to: 'shipments#update_status'
     end
   end
+  resources :locations
 end
