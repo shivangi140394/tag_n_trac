@@ -1,14 +1,38 @@
 <% if current_user && current_user.role == "admin" %>
-  <%= link_to 'User', users_path %><br>
-  <h1>Welcome Pages, <%= current_user.name %></h1>
-  <%= link_to 'Log out', user_session_path(current_user), data: { turbo_method: :delete } %><br>
-<% elsif  current_user && current_user.role != "admin" %>
-  <h1>Welcome Pages, <%= current_user.name %></h1>
-  <%= link_to 'Log out', user_session_path(current_user), data: { turbo_method: :delete } %><br>
-<% else %>
-  <h1>This is the index page</h1>
-  <%= link_to 'Login', new_user_session_path %><br>
-<% end %>
-<%#= link_to 'New User', new_user_path %><br>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <%= link_to 'User', users_path, class: "btn btn-primary" %>
+      </div>
+      <div class="col">
+        <%= link_to 'Add Locations', locations_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+    <h1>Welcome Pages, <%= current_user.name %></h1>
+    <%= link_to 'Log out', user_session_path(current_user), class: "btn btn-danger", data: { turbo_method: :delete } %>
+  </div>
 
-<%= link_to 'Secret page', '/users/secret' %>
+<% elsif  current_user && current_user.role == "customer" %>
+  <div class="container">
+    <h1>Welcome Pages Customer, <%= current_user.name %></h1>
+    <%= link_to 'New Shipment', new_shipment_path, class: "btn btn-primary" %><br>
+    <%= link_to 'Ordered Shipment', shipments_path(current_user), class: "btn btn-primary" %><br>
+    <%= link_to 'Log out', user_session_path(current_user), class: "btn btn-danger", data: { turbo_method: :delete } %>
+  </div>
+
+<% elsif  current_user && current_user.role == "delivery_partner" %>
+  <div class="container">
+    <h1>Welcome Pages delivery partner, <%= current_user.name %></h1>
+    <%= link_to 'Assigned Ordered', shipments_shipment_path(current_user), class: "btn btn-primary" %><br>
+    <%= link_to 'Log out', user_session_path(current_user), class: "btn btn-danger", data: { turbo_method: :delete } %>
+  </div>
+
+<% else %>
+  <div class="container">
+    <h1>This is the index page</h1>
+    <%= link_to 'Login', new_user_session_path, class: "btn btn-primary" %><br>
+    <%= link_to 'New User', new_user_path, class: "btn btn-primary" %><br>
+  </div>
+<% end %>
+
+<%= link_to 'Secret page', '/users/secret', class: "btn btn-warning" %>

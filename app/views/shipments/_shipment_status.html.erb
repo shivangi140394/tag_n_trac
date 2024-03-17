@@ -1,0 +1,8 @@
+<% if current_user.delivery_partner? %>
+  <%= form_with(model: shipment, url: update_status_shipment_path(shipment), method: :patch, class: 'update-status-form') do |form| %>
+    <%= form.select :status, options_for_select(Shipment.statuses.keys, shipment.status), {}, class: 'status-select' %>
+    <%= form.submit 'Update', data: { turbo: 'false' } %>
+  <% end %>
+<% else %>
+  <%= shipment.status %>
+<% end %>
