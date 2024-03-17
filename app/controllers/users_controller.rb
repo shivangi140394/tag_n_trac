@@ -5,6 +5,8 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @states = Location.pluck(:state).uniq
+    @cities = Location.pluck(:city).uniq
   end
 
   def create
@@ -28,6 +30,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :password, :password_confirmation, :username, :email, :phone_number, :address, :role)
+    params.require(:user).permit(:name, :password, :password_confirmation, :username, :email, :phone_number, 
+                                        :address, :role, :city, :state, :pincode)
   end
 end

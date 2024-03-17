@@ -1,4 +1,4 @@
-<h1>Users#new</h1>
+  <h1>Users#new</h1>
 <%= form_with model: @user do |f| %>
   <% if @user.errors.any? %>
     <div>
@@ -41,6 +41,23 @@
     <%= f.label :address %><br>
     <%= f.text_field :address %>
   </div>
+  <div>
+    <%= f.label :state %><br>
+    <%#= f.text_field :state %>
+    <%= f.select :state, options_for_select(@states), { prompt: 'Select State' } %>
+  </div>
+
+  <div>
+    <%= f.label :city %><br>
+    <%#= f.text_field :city %>
+    <%= f.select :city, options_for_select(@cities), { prompt: 'Select City' } %>
+  </div>
+
+  <div>
+    <%= f.label :pincode %><br>
+    <%= f.text_field :pincode %>
+  </div>
+
   <p>
     <%= f.submit %>
   </p>
