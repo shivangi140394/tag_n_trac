@@ -1,0 +1,41 @@
+<h1>Shipments for <%= current_user.name %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Source location</th>
+      <th>Target location</th>
+      <th>Item</th>
+      <th>Status</th>
+      <% if current_user.delivery_partner? %>
+        <th>Actions</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shipments.each do |shipment| %>
+      <tr>
+        <td><%= shipment.source_location %></td>
+        <td><%= shipment.target_location %></td>
+        <td><%= shipment.item %></td>
+        <td>
+          <% if current_user.delivery_partner? %>
+            <%= form_with(model: shipment, url: update_status_shipment_path(shipment), method: :patch, class: 'update-status-form') do |form| %>
+              <%= form.select :status, options_for_select(Shipment.statuses.keys, shipment.status), {}, class: 'status-select' %>
+              <%= form.submit 'Update', data: { turbo: 'false' } %>
+            <% end %>
+          <% else %>
+            <%= shipment.status %>
+          <% end %>
+        </td>
+        <% if current_user.delivery_partner? %>
+          <td>
+            <%= link_to 'Edit', edit_shipment_path(shipment) %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'Back', root_path %><br>
+<%= link_to 'Log out', user_session_path(current_user), data: { turbo_method: :delete } %><br>

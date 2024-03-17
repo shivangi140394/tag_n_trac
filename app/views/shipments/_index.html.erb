@@ -1,0 +1,28 @@
+<h1>Orders</h1>
+
+<%= link_to 'New Shipment', new_shipment_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Source location</th>
+      <th>Target location</th>
+      <th>Item</th>
+      <th>Status</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @shipments.each do |shipment| %>
+      <tr>
+        <turbo-frame id="shipment_<%= shipment.id %>">
+          <%= render partial: "shipment", locals: { shipment: shipment } %>
+        </turbo-frame>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', root_path %><br>
+<%= link_to 'Log out', user_session_path(current_user), data: { turbo_method: :delete } %><br>

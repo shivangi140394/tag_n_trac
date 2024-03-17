@@ -1,0 +1,47 @@
+
+<%= form_with(model: @shipment, local: true, html: { class: "turbo-frame" }) do |form| %>
+  <% if @shipment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@shipment.errors.count, "error") %> prohibited this shipment from being saved:</h2>
+
+      <ul>
+        <% @shipment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :item %>
+    <%= form.text_area :item %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_area :address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :source_location %>
+    <%= form.text_field :source_location %>
+  </div>
+
+  <div class="field">
+    <%= form.label :target_location %>
+    <%= form.text_area :target_location %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %><br />
+    <% if current_user.customer? %>
+      <%= form.select :status, [['Ordered', 'ordered'], ['Cancelled', 'cancelled']], { disabled: true }%>
+    <% else %>
+      <%= form.select :status, [['Shipped', 'shipped'], ['Delivered', 'delivered']], { disabled: true } %> 
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
