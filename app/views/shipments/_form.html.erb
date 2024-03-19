@@ -1,47 +1,80 @@
+<div class="container">
+  <%= form_with(model: @shipment, local: true, html: { class: "turbo-frame" }) do |form| %>
+    <% if @shipment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@shipment.errors.count, "error") %> prohibited this shipment from being saved:</h2>
 
-<%= form_with(model: @shipment, local: true, html: { class: "turbo-frame" }) do |form| %>
-  <% if @shipment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@shipment.errors.count, "error") %> prohibited this shipment from being saved:</h2>
+        <ul>
+          <% @shipment.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-      <ul>
-        <% @shipment.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div class="row justify-content-md-center">
+      <div class="col-md-6">
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <%= form.label :item, class: "form-label" %>
+          </div>
+          <div class="col-md-9">
+            <%= form.text_area :item, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <%= form.label :address, class: "form-label" %>
+          </div>
+          <div class="col-md-9">
+            <%= form.text_area :address, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <%= form.label :source_location, class: "form-label" %>
+          </div>
+          <div class="col-md-9">
+            <%= form.text_field :source_location, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <%= form.label :target_location, class: "form-label" %>
+          </div>
+          <div class="col-md-9">
+            <%= form.text_area :target_location, class: "form-control" %>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <%= form.label :status, class: "form-label" %>
+          </div>
+          <div class="col-md-9">
+            <% if current_user.customer? %>
+              <%= form.select :status, [['Ordered', 'ordered'], ['Cancelled', 'cancelled']], { disabled: true }, class: "form-select" %>
+            <% else %>
+              <%= form.select :status, [['Shipped', 'shipped'], ['Delivered', 'delivered']], { disabled: true }, class: "form-select" %> 
+            <% end %>
+          </div>
+        </div>
+
+        <div class="row justify-content-md-center">
+          <div class="col-md-6 text-center">
+            <%= form.submit class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :item %>
-    <%= form.text_area :item %>
+  <div class="row justify-content-md-center mt-3">
+    <div class="col-md-6 text-center">
+      <%= link_to 'Back', shipments_path, class: "btn btn-secondary" %>
+    </div>
   </div>
-
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.text_area :address %>
-  </div>
-
-  <div class="field">
-    <%= form.label :source_location %>
-    <%= form.text_field :source_location %>
-  </div>
-
-  <div class="field">
-    <%= form.label :target_location %>
-    <%= form.text_area :target_location %>
-  </div>
-
-  <div class="field">
-    <%= form.label :status %><br />
-    <% if current_user.customer? %>
-      <%= form.select :status, [['Ordered', 'ordered'], ['Cancelled', 'cancelled']], { disabled: true }%>
-    <% else %>
-      <%= form.select :status, [['Shipped', 'shipped'], ['Delivered', 'delivered']], { disabled: true } %> 
-    <% end %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

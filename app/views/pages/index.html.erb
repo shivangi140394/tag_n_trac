@@ -1,38 +1,64 @@
 <% if current_user && current_user.role == "admin" %>
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <%= link_to 'User', users_path, class: "btn btn-primary" %>
+  <div class="container mt-5">
+    <h1 class="mt-4 text-center">Welcome , <%= current_user.name %></h1>
+    <div class="row justify-content-center">
+      <div class="col-md-4 text-center mb-4">
+        <%= link_to 'User', users_path, class: "btn btn-outline-primary btn-lg btn-block" %>
       </div>
-      <div class="col">
-        <%= link_to 'Add Locations', locations_path, class: "btn btn-primary" %>
+      <div class="col-md-4 text-center mb-4">
+        <%= link_to 'Add Locations', locations_path, class: "btn btn-outline-primary btn-lg btn-block" %>
+      </div>
+      <div class="col-md-4 text-center mb-4">
+        <%= link_to 'Ordered Shipment', shipments_path, class: "btn btn-outline-primary btn-lg btn-block" %>
+      </div>
+      <div class="col-md-4 text-center mb-4">
+        <%= link_to 'Assigned Ordered', shipments_shipment_path(current_user), class: "btn btn-outline-primary btn-lg btn-block" %>
       </div>
     </div>
-    <h1>Welcome Pages, <%= current_user.name %></h1>
-    <%= link_to 'Log out', user_session_path(current_user), class: "btn btn-danger", data: { turbo_method: :delete } %>
   </div>
 
 <% elsif  current_user && current_user.role == "customer" %>
-  <div class="container">
-    <h1>Welcome Pages Customer, <%= current_user.name %></h1>
-    <%= link_to 'New Shipment', new_shipment_path, class: "btn btn-primary" %><br>
-    <%= link_to 'Ordered Shipment', shipments_path(current_user), class: "btn btn-primary" %><br>
-    <%= link_to 'Log out', user_session_path(current_user), class: "btn btn-danger", data: { turbo_method: :delete } %>
+  <div class="container mt-5">
+    <h1 class="mt-4 text-center">Welcome, <%= current_user.name %></h1>
+    <div class="row justify-content-center">
+      <div class="col-md-4 text-center mb-4">
+        <%= link_to 'New Shipment', new_shipment_path, class: "btn btn-outline-primary btn-lg btn-block" %>
+      </div>
+      <div class="col-md-4 text-center mb-4">
+        <%= link_to 'Ordered Shipment', shipments_path(current_user), class: "btn btn-outline-primary btn-lg btn-block" %>
+      </div>
+      <div class="col-md-4 text-center mb-4">
+        <%= link_to 'Edit Profile', edit_user_path(current_user), class: "btn btn-outline-primary btn-lg btn-block" %>
+      </div>
+    </div>
   </div>
 
 <% elsif  current_user && current_user.role == "delivery_partner" %>
-  <div class="container">
-    <h1>Welcome Pages delivery partner, <%= current_user.name %></h1>
-    <%= link_to 'Assigned Ordered', shipments_shipment_path(current_user), class: "btn btn-primary" %><br>
-    <%= link_to 'Log out', user_session_path(current_user), class: "btn btn-danger", data: { turbo_method: :delete } %>
+  <div class="container mt-5">
+    <h1 class="mt-4 text-center">Welcome, <%= current_user.name %></h1>
+    <div class="row justify-content-center">
+      <div class="col-md-4 text-center mb-4">
+        <%= link_to 'Assigned Ordered', shipments_shipment_path(current_user), class: "btn btn-outline-primary btn-lg btn-block" %>
+      </div>
+      <div class="col-md-4 text-center mb-4">
+         <% if can? :edit, User %>
+        <%= link_to 'Edit Profile', edit_user_path(current_user), class: "btn btn-outline-primary btn-lg btn-block" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 
 <% else %>
-  <div class="container">
-    <h1>This is the index page</h1>
-    <%= link_to 'Login', new_user_session_path, class: "btn btn-primary" %><br>
-    <%= link_to 'New User', new_user_path, class: "btn btn-primary" %><br>
+  <div class="container mt-5">
+    <h1 class="mt-4 text-center">Dashboard</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-4 text-center mb-4">
+        <%= link_to 'Login', new_user_session_path, class: "btn btn-outline-primary btn-lg btn-block" %>
+      </div>
+      <div class="col-md-4 text-center mb-4">
+        <%= link_to 'New User', new_user_path, class: "btn btn-outline-primary btn-lg btn-block" %>
+      </div>
+    </div>
   </div>
 <% end %>
 
-<%= link_to 'Secret page', '/users/secret', class: "btn btn-warning" %>

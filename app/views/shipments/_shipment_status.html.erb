@@ -1,6 +1,6 @@
-<% if current_user.delivery_partner? %>
-  <%= form_with(model: shipment, url: update_status_shipment_path(shipment), method: :patch, class: 'update-status-form') do |form| %>
-    <%= form.select :status, options_for_select(Shipment.statuses.keys, shipment.status), {}, class: 'status-select' %>
+<% if current_user.role.include?("customer") || current_user.role.include?("admin") %>
+  <%= form_with(model: shipment, url: update_status_shipment_path(shipment), method: :patch, class: 'update-status-form',  format: :turbo_stream, remote: true) do |form| %>
+    <%= form.select :status, [['Shipped', 'shipped'], ['Delivered', 'delivered']], {}, class: 'status-select' %>
     <%= form.submit 'Update', data: { turbo: 'false' } %>
   <% end %>
 <% else %>

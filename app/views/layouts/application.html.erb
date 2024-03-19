@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+
+    <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload', 'data-turbo-frame': 'none' %> 
+    <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
   </head>
 
   <body>
@@ -16,6 +16,59 @@
         <%= msg %>
       </div>
     <% end %>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <%= link_to 'Tag-N-trac', root_path, class: "navbar-brand" %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <%= link_to 'Users', users_path, class: "nav-link" if current_user&.admin? %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Add Locations', locations_path, class: "nav-link" if current_user&.admin? %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Ordered Shipment', shipments_path, class: "nav-link" if current_user&.admin? %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Assigned Ordered', shipments_shipment_path(current_user), class: "nav-link" if current_user&.admin? %>
+            </li>
+
+
+            <li class="nav-item">
+              <%= link_to 'New Shipment', new_shipment_path, class: "nav-link" if current_user&.customer? %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Ordered Shipment', shipments_path(current_user), class: "nav-link" if current_user&.customer? %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Edit Profile', edit_user_path(current_user), class: "nav-link" if current_user&.customer? %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to 'Assigned Ordered', shipments_shipment_path(current_user), class: "nav-link" if current_user&.delivery_partner? %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Edit Profile', edit_user_path(current_user), class: "nav-link" if current_user&.delivery_partner? %>
+            </li>
+
+          </ul>
+          <% if current_user %>
+            <span class="navbar-text">
+              Welcome <%= current_user.name %>! 
+            </span>
+            <%= form_with(url: user_session_path(current_user), method: :delete, local: true) do |form| %>
+              <%= form.submit 'Log out', class: 'btn btn-outline-danger', data: { turbo: 'false',  turbo_method: :delete }, id: "logoutBtn" %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
     <%= yield %>
   </body>
 </html>
