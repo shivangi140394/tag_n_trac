@@ -5,10 +5,8 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   root 'pages#index'
-  get 'pages/secret'
-  get 'users/secret'
   resources :user_sessions, only: [:new, :create, :destroy]
-  resources :users, only: [:index, :new, :create] 
+  resources :users 
   resources :shipments do 
     member do
       get 'shipments', to: 'shipments#user_shipments'
