@@ -1,5 +1,6 @@
 class LocationsController < ApplicationController
   before_action :require_admin, except: [:index, :show, :new, :create]
+  before_action :find_location, only: [:edit, :update, :destroy]
 
   def index
     @locations = Location.all
@@ -21,11 +22,14 @@ class LocationsController < ApplicationController
   end
 
   def edit
+  end
+
+  def show
     @location = Location.find(params[:id])
+    redirect_to root_path if @location.present?
   end
 
   def update
-    @location = Location.find(params[:id])
     if @location.update(location_params)
       flash[:notice] = "Location updated successfully"
       redirect_to locations_path
@@ -36,7 +40,6 @@ class LocationsController < ApplicationController
   end
 
   def destroy
-    @location = Location.find(params[:id])
     @location.destroy
     redirect_to locations_path
   end
@@ -51,5 +54,9 @@ class LocationsController < ApplicationController
     unless current_user.admin?
       redirect_to root_path, alert: 'You are not authorized to perform this action.'
     end
+  end
+
+  def find_location
+    @location = Location.find(params[:id])
   end
 end
