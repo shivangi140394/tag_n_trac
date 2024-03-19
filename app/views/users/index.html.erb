@@ -1,28 +1,40 @@
-<h1>Users#index</h1>
+<div class="container">
+  <%= link_to 'New User', new_user_path, class: "btn btn-primary mt-3" %>
 
-<%= link_to 'New User', new_user_path %>
-
-<table>
-  <thead>
-    <tr>
-      <th>id</th>
-      <th>role</th>
-      <th>name</th>
-      <th>email</th>
-      <th>address</th>
-      <th>phone_number</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
+  <table class="table mt-3">
+    <thead>
       <tr>
-        <td><%= user.id %></td>
-        <td><%= user.role %></td>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.phone_number %></td>
-        <td><%= user.address %></td>
+        <th>id</th>
+        <th>role</th>
+        <th>name</th>
+        <th>email</th>
+        <th>phone_number</th>
+        <th>address</th>
+        <th>city</th>
+        <th>state</th>
+        <th>pincode</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.role %></td>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.phone_number %></td>
+          <td><%= user.address %></td>
+          <td><%= user.city %></td>
+          <td><%= user.state %></td>
+          <td><%= user.pincode %></td>
+          <td><%= link_to 'Edit', edit_user_path(user) %></td>
+          <td>
+            <%= form_with(model: user, url: user_path(user), method: :delete, data: { confirm: 'Are you sure?' }) do |form| %>
+              <%= form.submit 'Delete', data: { turbo_frame: "user_#{user.id}" } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
