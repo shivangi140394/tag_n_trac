@@ -10,7 +10,7 @@ class User < ApplicationRecord
   #validations
   validates :username, presence: true, uniqueness: true
   validates :role, presence: true
-  validates :pincode, presence: true, format: { with: /\A\d{5}\z/, message: "should be a 5-digit number" }
+  validates :pincode, length: { minimum: 5 }
   validates :phone_number, presence: true, format: { with: /\A\d{10}\z/, message: "must be 10 digits" }
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "must be a valid email address" }
 

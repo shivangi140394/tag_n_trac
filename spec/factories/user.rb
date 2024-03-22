@@ -6,5 +6,9 @@ FactoryBot.define do
     password_confirmation { 'password' }
     email { 'test@example.com' }
     role { 'customer' }
+    pincode { 23456 }
+    phone_number { 1234567898 }
+    state { 'maharastra' }
+    city { 'mumbai' }
   end
 end

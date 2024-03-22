@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :shipment do
-    source_location { 'Indore' }
+    source_location { 'maharastra' }
     target_location { 'mumbai' }
     item { 'electronic' }
     status { 'ordered' }

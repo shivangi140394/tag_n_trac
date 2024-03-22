@@ -5,7 +5,7 @@ class Shipment < ApplicationRecord
   belongs_to :admin, class_name: "User", optional: true
 
   #validation
-  validates :status, presence: true
+  validates :status, :source_location, :target_location, presence: true
 
   #custom validation
   validate :target_location_and_user_role_exists
